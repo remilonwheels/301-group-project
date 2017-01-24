@@ -1,3 +1,3 @@
 'use strict';
 
-$(facility.fetch());
+$(facility.fetch(initMap));
