@@ -19,5 +19,5 @@ function initMap() {
 
 
 function queryStringify(string) {
-  return string.trim().replace(/\s/g, '+');
+  return string.trim().replace(/\s{3}/g, '').replace(/\s/g, '+');
 }
