@@ -23,7 +23,10 @@
     this.opPhone2 = obj[24];
     this.paymentType = obj[25];
 
-    facility.all.push(this);
+    if (obj[10] && obj[10].toLowerCase().includes('seattle') && parseInt(obj[8]) !== 127 && parseInt(obj[8]) !== 508 ) {
+      facility.all.push(this);
+    }
+
   }
 
   const googleMapsKey = 'AIzaSyCI5Y7sWLEb4ullGAaSJDbHHYv2-wPCyUI';
@@ -36,22 +39,21 @@
     // });
     let tempArray = [];
 
-
     //URLS for practice and real
     // https://data.seattle.gov/api/views/3neb-8edu/rows.json
     //'scripts/data/sample10.json'
-    $.getJSON('scripts/data/sample10.json')
+    $.getJSON('https://data.seattle.gov/api/views/3neb-8edu/rows.json')
     .then( dataObject => {
       dataObject.data.forEach(facility => new Facility(facility));
-      console.log(facility.all);
 
       Promise.all(
         facility.all.map( facility => {
           return $.getJSON(`https://maps.googleapis.com/maps/api/geocode/json?address=${queryStringify(facility.addressFull)}&key=${googleMapsKey}`)
           .then( locationObject => {
-            facility.location = locationObject.results[0].geometry.location;
-            tempArray.push(facility);
-            console.log(tempArray);
+            if(locationObject.results[0].geometry.location) {
+              facility.location = locationObject.results[0].geometry.location;
+              tempArray.push(facility);
+            }
           })
         })
       )
