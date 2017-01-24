@@ -8,13 +8,22 @@ function initMap() {
   });
 
   facility.all.forEach( facility => {
-    let marker = new google.maps.Marker({
-      position: facility.location,
-      map: map,
-      label: `$${facility.rate2Hr}`
-    });
-    marker.addListener('click', () => {alert('ayo');})
-  })
+    if(!(isNaN(facility.rate2Hr))){
+      let marker = new google.maps.Marker({
+        position: facility.location,
+        map: map,
+        label: `$${facility.rate2Hr}`
+      });
+      var contentString = `<h4>${!facility.facilityName ? 'unknown' : facility.facilityName}</h4><p>${facility.addressFull}</p><h6>Hours</h6><p>${!facility.hoursMF ? 'unknown' : facility.hoursMF}</p><h6>Weekend Hrs</h6><p>SAT:${!facility.hoursSat ? 'N/A' : facility.hoursSat}</p><p>SUN:${!facility.hoursSun ? 'N/A' : facility.hoursSun}</p>`; 
+
+        var infowindow = new google.maps.InfoWindow({
+          content: contentString,
+          maxWidth: 200
+        });
+      marker.addListener('click', () => {infowindow.open(map, marker);
+      })
+    }
+  });
 }
 
 
