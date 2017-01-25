@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="styles/bootstrap.css">
     <link rel="stylesheet" href="styles/bootstrap.min.css">
     <link rel="stylesheet" href="styles/business-casual.css">
+    <link rel="stylesheet" href="base.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQa2PVVXDWXN-EU5SRjbITcl1WhyzrGGw&libraries=places"></script>
+
   </head>
   <body>
     <div class="brand">The Price I$ Right Parking</div>
@@ -41,7 +44,13 @@
                 </div>
                 <!-- /.container -->
             </nav>
+  <input id="pac-input" class="controls" type="text" placeholder="Search Box">
     <div id="map"></div>
+    <div id="infowindow-content">
+      <span id="place-name"  class="title"></span><br>
+      Place ID <span id="place-id"></span><br>
+      <span id="place-address"></span>
+    </div>
 
     <div class="row">
                 <div class="box">
@@ -55,6 +64,26 @@
                     </div>
                 </div>
             </div>
+      <section class="about-us">
+      <div class="row" id="about-us">
+        <div class="col-lg-3 text-center">
+          <h2>Remi</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p>
+        </div>
+        <div class="col-lg-3 text-center">
+          <h2>Alejandro </h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p>
+        </div>
+        <div class="col-lg-3 text-center">
+          <h2>Jeff</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p>
+        </div>
+        <div class="col-lg-3 text-center">
+          <h2>Chika</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc placerat diam quis nisl vestibulum dignissim. In hac habitasse platea dictumst. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p>
+        </div>
+      </div>
+    </section>
     <footer>
         <div class="container">
             <div class="row">
@@ -66,7 +95,7 @@
     </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCI5Y7sWLEb4ullGAaSJDbHHYv2-wPCyUI"></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCI5Y7sWLEb4ullGAaSJDbHHYv2-wPCyUI"></script> -->
     <script src="scripts/models/facility.js"></script>
     <script src="scripts/views/mapView.js"></script>
     <script src="scripts/controllers/appController.js"></script>
@@ -74,8 +103,9 @@
 
   <!-- Bootstrap Core JavaScript -->
   <script src="vendor/scripts/bootstrap.min.js"></script>
-    <!-- <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCI5Y7sWLEb4ullGAaSJDbHHYv2-wPCyUI&callback=initMap"></script> -->
+    <!--
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCI5Y7sWLEb4ullGAaSJDbHHYv2-wPCyUI&libraries=places&callback=initMap"
+        async defer></script>-->
 
 
   </body>
