@@ -81,13 +81,11 @@ app.get('/database', (request, response) => {
       `SELECT * FROM facility_data`,
       (err, result) => {
         if (err) console.error(err);
-        response.send(result);
+        response.send(result.rows[0].data_json);
         client.end();
       }
     );
   })
 });
-
-
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}!`));
