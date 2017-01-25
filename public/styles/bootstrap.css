@@ -1581,6 +1581,14 @@ pre code {
   max-height: 340px;
   overflow-y: scroll;
 }
+#map {
+  padding-right: 25px;
+  padding-left: 25px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 20px;
+
+}
 .container {
   padding-right: 15px;
   padding-left: 15px;
@@ -1591,15 +1599,25 @@ pre code {
   .container {
     width: 750px;
   }
+  #map{
+    width: 750px;
+  }
+
 }
 @media (min-width: 992px) {
   .container {
     width: 970px;
   }
-}
+  #map {
+    width: 991px;
+  }
+  }
 @media (min-width: 1200px) {
   .container {
     width: 1170px;
+  }
+  #map {
+    width: 1150;
   }
 }
 .container-fluid {
@@ -6753,6 +6771,6 @@ button.close {
   .hidden-print {
     display: none !important;
   }
-  
+
 }
 /*# sourceMappingURL=bootstrap.css.map */
