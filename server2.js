@@ -12,7 +12,9 @@ app.use(express.static('./public'));
 
 app.get('/', (request, response) => response.sendFile('index.html', {root: './public'}));
 
-app.get('/test', (req, resp) => {
+app.get('/test', fetch);
+
+function fetch(req, resp) {
   //API for raw data of parking facilities
   request.getAsync('http://localhost:4000/scripts/data/sample10.json')
 
@@ -61,7 +63,7 @@ app.get('/test', (req, resp) => {
     //Process the swag
     .then(result => resp.send(locationArray));
   })
-});
+}
 
 const googleMapsKey = `AIzaSyCI5Y7sWLEb4ullGAaSJDbHHYv2-wPCyUI`;
 
@@ -69,6 +71,23 @@ const googleMapsKey = `AIzaSyCI5Y7sWLEb4ullGAaSJDbHHYv2-wPCyUI`;
 function queryStringify(string) {
   return string.trim().replace(/\s{3}/g, '').replace(/\s/g, '+');
 }
+
+app.get('/database', (request, response) => {
+  let client = new pg.Client(conString);
+
+  client.connect(err => {
+    if (err) console.error(err);
+    client.query(
+      `SELECT * FROM facility_data`,
+      (err, result) => {
+        if (err) console.error(err);
+        response.send(result);
+        client.end();
+      }
+    );
+  })
+});
+
 
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}!`));

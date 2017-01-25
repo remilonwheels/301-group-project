@@ -24,30 +24,27 @@ function SQL(parts, ...values) {
   };
 }
 
+INSERT INTO facility_data 
+(
+  data_desc,
+  data_json
+)
+VALUES
+(
+  'testobj',
+  '{"arraykey":[1,2],"stringkey":"ayo"}'
+);
+
+
 const loadRecordProject = function(record) {
   return new Promise((res, rej) => {
     res(pool.query(SQL`
       INSERT INTO projects (
-        project_name,
-        project_section,
-        date_begin,
-        date_end,
-        project_img,
-        title_description,
-        tags,
-        gh_repo_name,
-        site_link,
-        code_score)
+        data_desc,
+        data_json)
        VALUES (
          ${record.projectName},
-         ${record.projectSection},
-         ${record.dateBegin},
-         ${record.dateEnd},
-         ${record.projectIMG},
-         ${record.titleDescription},
-         ${JSON.stringify(record.tags)},
-         ${record.ghRepoName},
-         ${record.siteLink},
+
          ${JSON.stringify(record.codeScore)}
        );`))
     .catch(err => rej(err))
@@ -58,9 +55,10 @@ ops.createTableProject = function() {
   return new Promise((res, rej) => {
     const sqlCreate =`
         CREATE TABLE IF NOT EXISTS
-        parking_tbl (
-          appdata_name VARCHAR(255) PRIMARY KEY,
-          json_data JSONB NOT NULL
+        facility_data (
+          data_id SERIAL PRIMARY KEY,
+          data_desc VARCHAR(255),
+          data_json JSONB NOT NULL
         );`
 
     res(
