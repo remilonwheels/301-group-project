@@ -7,14 +7,24 @@ function initMap() {
     center: codefellows
   });
 
-  facility.all.forEach( facility => {
+  facility.all.forEach(facility => {
     if(facility.rate2Hr){
+      if(facility.rate2Hr < 18){
       let marker = new google.maps.Marker({
         position: facility.location,
         map: map,
-        label: `$${facility.rate2Hr}`
+        label: `$${facility.rate2Hr}`,
+        icon: 'images/markers/darkgreen_MarkerA.png'
       });
-      var contentString = `<h4>${!facility.facilityName ? 'unknown' : facility.facilityName}</h4><p>${facility.addressFull}</p><h6>Hours</h6><p>${!facility.hoursMF ? 'unknown' : facility.hoursMF}</p><h6>Weekend Hrs</h6><p>SAT:${!facility.hoursSat ? 'N/A' : facility.hoursSat}</p><p>SUN:${!facility.hoursSun ? 'N/A' : facility.hoursSun}</p>`;
+      if(facility.rate2Hr = 18){
+        let marker = new google.maps.Marker({
+          position: facility.location,
+          map: map,
+          label: `$${facility.rate2Hr}`,
+        });
+
+
+      var contentString = `<h4>${!facility.facilityName ? 'unknown' : facility.facilityName}</h4><p>${facility.addressFull}</p><h6>Hours</h6><p>${!facility.hoursMF ? 'unknown' : facility.hoursMF}</p><h6>Weekend Hrs</h6><p>SAT: ${!facility.hoursSat ? 'N/A' : facility.hoursSat}</p><p>SUN: ${!facility.hoursSun ? 'N/A' : facility.hoursSun}</p>`;
 
         var infowindow = new google.maps.InfoWindow({
           content: contentString,
@@ -23,6 +33,8 @@ function initMap() {
       marker.addListener('click', () => {infowindow.open(map, marker);
       })
     }
+    }
+  }
   });
 }
 
