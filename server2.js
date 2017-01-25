@@ -6,6 +6,7 @@ const pg = require('pg');
 const express = require('express');
 const PORT = process.env.PORT || 4000;
 const app = express();
+const SQL = require('sql-template-strings')
 const conString = process.env.DATABASE_URL || 'postgres://postgres:qazWSXpostgres77@localhost:5432/postgres';
 
 app.use(express.static('./public'));
@@ -50,18 +51,44 @@ function fetch(req, resp) {
     let locationArray = [];
     let promises = parsedFacilities.map(facility => {
       return request.getAsync(`https://maps.googleapis.com/maps/api/geocode/json?address=${queryStringify(facility.addressFull)}&key=${googleMapsKey}`)
-      .then( response => {
+      .then( googleResponse => {
         let locFacility = {};
         Object.keys(facility).forEach(property => {locFacility[property] = facility[property]});
-        locFacility.location = JSON.parse(response.body).results[0].geometry.location;
+        locFacility.location = JSON.parse(googleResponse.body).results[0].geometry.location;
         locationArray.push(locFacility);
       })
-    })
+    });
+
     //Wait for all location API calls to complete
     Promise.all(promises)
-
     //Process the swag
-    .then(result => resp.send(locationArray));
+    .then(result => {
+      updateFacilityData(JSON.stringify(locationArray));
+      resp.send(locationArray);
+    });
+  })
+}
+
+function updateFacilityData(facilityAllArray){
+  let client = new pg.Client(conString);
+
+  client.connect(err => {
+    if (err) console.error(err);
+    client.query(SQL
+      `INSERT INTO facility_data (
+        data_desc,
+        data_json
+      )
+      VALUES (
+        'sampleFacilityJSON5',
+        ${facilityAllArray}
+       );`,
+      (err, result) => {
+        if (err) console.error(err);
+        console.log('INSERT COMPLETE');
+        client.end();
+      }
+    );
   })
 }
 
@@ -87,5 +114,7 @@ app.get('/database', (request, response) => {
     );
   })
 });
+
+
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}!`));
