@@ -3,7 +3,7 @@ const express = require('express');
 // const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 4000;
 const app = express();
-const conString = process.env.DATABASE_URL || 'postgres://localhost:5432';
+const conString = process.env.DATABASE_URL || 'postgres://postgres:qazWSXpostgres77@localhost:5432/postgres';
 const request = require('request');
 
 app.use(express.static('./public'));
