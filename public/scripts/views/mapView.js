@@ -77,8 +77,8 @@ function initMapView() {
         markers.push(new google.maps.Marker({
           map: map,
           icon: icon,
-          title: this.facilityName,
-          position: this.addressFull
+          title: place.name,
+              position: place.geometry.location
         }));
 
         if (place.geometry.viewport) {
