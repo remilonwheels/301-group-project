@@ -43,20 +43,15 @@ app.get('/test', (req, resp) => {
     let promises = parsedFacilities.map(facility => {
       return request.getAsync(`https://maps.googleapis.com/maps/api/geocode/json?address=${queryStringify(facility.addressFull)}&key=${googleMapsKey}`)
       .then( response => {
-        console.log('in async then');
-        parsedFacilities.forEach(pfacility => {
-          console.log(pfacility);
-          let locFacility = {};
-          Object.keys(pfacility).forEach(property => {locFacility[property] = pfacility[property]});
-          locFacility.location = JSON.parse(response.body).results[0].geometry.location;
-          locationArray.push(locFacility);
-        })
-      })
+        let locFacility = {};
+        Object.keys(facility).forEach(property => {locFacility[property] = facility[property]});
+        locFacility.location = JSON.parse(response.body).results[0].geometry.location;
+        locationArray.push(locFacility);
+      })    
     })
     Promise.all(promises)
     .then(result => resp.send(locationArray));
   })
-
 });
 
 const googleMapsKey = `AIzaSyCI5Y7sWLEb4ullGAaSJDbHHYv2-wPCyUI`;
