@@ -17,7 +17,11 @@ function initMapView() {
             position: facility.location,
             map: map,
             label: `$${facility.rate2Hr}`,
-            icon: 'images/markers/darkgreen_MarkerA.png'
+            icon: {
+              scale: 6,
+              path: google.maps.SymbolPath.CIRCLE,
+              strokeColor: '#228B22'
+            }
           });
           marker.addListener('click', () => {
             infowindow.open(map, marker);
@@ -28,6 +32,11 @@ function initMapView() {
             position: facility.location,
             map: map,
             label: `$${facility.rate2Hr}`,
+            icon: {
+              scale: 6,
+              path: google.maps.SymbolPath.CIRCLE,
+              strokeColor: '#f00'
+            }
           });
           marker.addListener('click', () => {
             infowindow.open(map, marker);
@@ -35,7 +44,7 @@ function initMapView() {
         }
 
 
-        var contentString = `<h4>${!facility.facilityName ? 'unknown' : facility.facilityName}</h4><p>${facility.addressFull}</p><h6>Hours</h6><p>${!facility.hoursMF ? 'unknown' : facility.hoursMF}</p><h6>Weekend Hrs</h6><p>SAT: ${!facility.hoursSat ? 'N/A' : facility.hoursSat}</p><p>SUN: ${!facility.hoursSun ? 'N/A' : facility.hoursSun}</p>`;
+        var contentString = `<h4>${!facility.facilityName ? 'unknown' : facility.facilityName}</h4><p>${facility.addressFull}</p><h6>Hours</h6><p>${!facility.hoursMF ? 'unknown' : facility.hoursMF}</p><h6>Weekend Hrs</h6><p>SAT: ${!facility.hoursSat ? 'N/A' : facility.hoursSat}</p><p>SUN: ${!facility.hoursSun ? 'N/A' : facility.hoursSun}</p><h6>Price</h6><p> ${facility.rate2Hr}</p>`;
 
         var infowindow = new google.maps.InfoWindow({
           content: contentString,
