@@ -52,21 +52,17 @@ function fetch(req, resp) {
     let promises = parsedFacilities.map(facility => {
       return request.getAsync(`https://maps.googleapis.com/maps/api/geocode/json?address=${queryStringify(facility.addressFull)}&key=${googleMapsKey}`)
       .then( googleResponse => {
-        console.log(googleResponse);
         let locFacility = {};
         Object.keys(facility).forEach(property => {locFacility[property] = facility[property]});
         locFacility.location = JSON.parse(googleResponse.body).results[0].geometry.location;
         locationArray.push(locFacility);
-        console.log('ajax call done********************************');
       })
     });
 
-    console.log('promises', promises);
     //Wait for all location API calls to complete
     Promise.all(promises)
     //Process the swag
     .then(result => {
-      console.log(locationArray);
       updateFacilityData(JSON.stringify(locationArray));
       resp.send(locationArray);
     });
