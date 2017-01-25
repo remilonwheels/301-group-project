@@ -1,3 +1,3 @@
 'use strict';
 
-$(facility.fetch(initMap));
+$(facility.fetch(initMapView));
