@@ -42,7 +42,8 @@
     //URLS for practice and real
     // https://data.seattle.gov/api/views/3neb-8edu/rows.json
     //'scripts/data/sample10.json'
-    $.getJSON('https://data.seattle.gov/api/views/3neb-8edu/rows.json')
+    // /fetch -> server-side call
+    $.getJSON('/fetch')
     .then( dataObject => {
       dataObject.data.forEach(facility => new Facility(facility));
 
@@ -60,29 +61,6 @@
       .then(() => {
         facility.all = tempArray;
         console.log(tempArray);
-        // let staticObjectArray = tempArray.map(facility => {
-        //   return {
-        //     id : facility.id,
-        //     addressFull : facility.addressFull,
-        //     facilityName : facility.facilityName,
-        //     hoursMF : facility.hoursMF,
-        //     hoursSat : facility.hoursSat,
-        //     hoursSun : facility.hoursSun,
-        //     facilityType : facility.facilityType,
-        //     rate1Hr : facility.rate1Hr,
-        //     rate2Hr : facility.rate2Hr,
-        //     rate3Hr : facility.rate3Hr,
-        //     rateDay : facility.rateDay,
-        //     opName : facility.opName,
-        //     opPhone1 : facility.opPhone1,
-        //     opPhone2 : facility.opPhone2,
-        //     paymentType : facility.paymentType,
-        //     location : facility.location
-        //   }
-        // });
-        //
-        // console.log(staticObjectArray);
-        // localStorage.allFacilitiesAndLocationsArray = JSON.stringify(staticObjectArray);
         callback();
       });
     });
