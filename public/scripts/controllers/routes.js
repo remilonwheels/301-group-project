@@ -2,4 +2,6 @@
 
 page('/', mapController.index);
 
+page('/about', aboutController.index);
+
 page();
