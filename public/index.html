@@ -47,8 +47,8 @@
                 <!-- /.container -->
             </nav>
     <section id="home">
-      <div id="map"></div>
       <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+      <div id="map"></div>
       <div class="controller">
         <button id="rate-change-button-1hr">1 Hour</button>
         <button id="rate-change-button-2hr">2 Hours</button>
@@ -144,6 +144,10 @@
     <script src="scripts/controllers/mapController.js"></script>
     <script src="scripts/controllers/aboutController.js"></script>
     <script src="scripts/controllers/routes.js"></script>
+
+    <script>
+      $(facility.fetch(mapView.initMapView));
+    </script>
 
   </body>
 </html>
