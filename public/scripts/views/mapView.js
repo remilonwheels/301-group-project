@@ -12,7 +12,7 @@ function initMapView() {
   function makeMapMarkers() {
     facility.all.forEach(facility => {
       if(facility.rate2Hr){
-        if(facility.rate2Hr < 18){
+        if(facility.rate2Hr < 9){
           let marker = new google.maps.Marker({
             position: facility.location,
             map: map,
@@ -29,7 +29,7 @@ function initMapView() {
             infowindow.open(map, marker);
           });
         }
-        if(facility.rate2Hr === 18){
+        if(facility.rate2Hr > 9){
           let marker = new google.maps.Marker({
             position: facility.location,
             map: map,
