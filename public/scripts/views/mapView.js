@@ -20,7 +20,9 @@ function initMapView() {
             icon: {
               scale: 6,
               path: google.maps.SymbolPath.CIRCLE,
-              strokeColor: '#228B22'
+              strokeColor: '#228B22',
+              fillColor:'#228B22',
+              color: 'white'
             }
           });
           marker.addListener('click', () => {
@@ -35,7 +37,9 @@ function initMapView() {
             icon: {
               scale: 6,
               path: google.maps.SymbolPath.CIRCLE,
-              strokeColor: '#f00'
+              strokeColor: '#f00',
+              fillColor: '#f00',
+              color: 'white'
             }
           });
           marker.addListener('click', () => {
