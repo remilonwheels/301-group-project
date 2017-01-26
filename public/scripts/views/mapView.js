@@ -24,13 +24,6 @@
                 color: 'white',
                 text:`$${facility.rate2Hr}`
               },
-              // icon: {
-              //   scale: 6,
-              //   path: google.maps.SymbolPath.CIRCLE,
-              //   strokeColor: '#228B22',
-              //   fillColor:'#228B22',
-              //   color: 'white'
-              // },
               icon:{
                 anchor: new google.maps.Point(16, 16),
                 url: `data:image/svg+xml;utf-8, \
@@ -53,13 +46,6 @@
                 color: 'red',
                 text:`$${facility.rate2Hr}`
               },
-              // icon: {
-              //   scale: 6,
-              //   path: google.maps.SymbolPath.CIRCLE,
-              //   strokeColor: '#228B22',
-              //   fillColor:'#228B22',
-              //   color: 'white'
-              // },
               icon:{
                 anchor: new google.maps.Point(16, 16),
                 url: 'data:image/svg+xml;utf-8, \
