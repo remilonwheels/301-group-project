@@ -17,7 +17,7 @@ app.get('/test', fetch);
 
 function fetch(req, resp) {
   //API for raw data of parking facilities
-  request.getAsync('http://localhost:4000/scripts/data/sample10.json')
+  request.getAsync('https://data.seattle.gov/api/views/3neb-8edu/rows.json')
 
   //Navigate from raw data to facilitie array
   .then( response => JSON.parse(response.body).data)
@@ -47,16 +47,18 @@ function fetch(req, resp) {
 
   //Add location for each facility with Google Maps Geocode API  call
   .then ( parsedFacilities => {
-    console.log(parsedFacilities);
     let locationArray = [];
     let promises = parsedFacilities.map(facility => {
       return request.getAsync(`https://maps.googleapis.com/maps/api/geocode/json?address=${queryStringify(facility.addressFull)}&key=${googleMapsKey}`)
+      .catch( e=> console.log(e))
       .then( googleResponse => {
         let locFacility = {};
         Object.keys(facility).forEach(property => {locFacility[property] = facility[property]});
         locFacility.location = JSON.parse(googleResponse.body).results[0].geometry.location;
         locationArray.push(locFacility);
+        console.log(`Facility ${facility.id} loaded`);
       })
+      .catch( e=> console.log(e))
     });
 
     //Wait for all location API calls to complete
@@ -80,7 +82,7 @@ function updateFacilityData(facilityAllArray){
         data_json
       )
       VALUES (
-        'sampleFacilityJSON5',
+        'api pull server 01-25-16',
         ${facilityAllArray}
        );`,
       (err, result) => {
@@ -92,7 +94,7 @@ function updateFacilityData(facilityAllArray){
   })
 }
 
-const googleMapsKey = `AIzaSyCI5Y7sWLEb4ullGAaSJDbHHYv2-wPCyUI`;
+const googleMapsKey = `AIzaSyBpciE8JuzA5cZGHscnBLaJEc4cFs_ksNY`;
 
 //Makes string query ready
 function queryStringify(string) {
@@ -104,8 +106,10 @@ app.get('/database', (request, response) => {
 
   client.connect(err => {
     if (err) console.error(err);
-    client.query(
-      `SELECT * FROM facility_data`,
+    client.query(SQL`
+      SELECT * FROM facility_data
+      WHERE data
+      `,
       (err, result) => {
         if (err) console.error(err);
         response.send(result.rows[0].data_json);

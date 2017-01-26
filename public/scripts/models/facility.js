@@ -51,7 +51,7 @@
     // https://data.seattle.gov/api/views/3neb-8edu/rows.json
     //'scripts/data/sample10.json'
     // /fetch -> server-side call
-    $.getJSON('scripts/data/sampleFacilityAll5.json')
+    $.getJSON('scripts/data/allFacilities.json')
     .then( dataObject => {
       if ( !dataObject.data ) {
         dataObject.forEach(facility => new Facility(facility));
