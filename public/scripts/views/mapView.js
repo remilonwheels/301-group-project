@@ -13,6 +13,7 @@
       facility.all.forEach(facility => {
         if(facility[zzRatezz] <= filterRate){
           let marker = new google.maps.Marker({
+            animation: google.maps.Animation.DROP,
             position: facility.location,
             map: map,
             label: {
@@ -39,6 +40,7 @@
         }
         if(facility[zzRatezz] > filterRate){
           let marker = new google.maps.Marker({
+            animation: google.maps.Animation.DROP,
             position: facility.location,
             map: map,
             label: {
@@ -83,7 +85,7 @@
 
       var input = document.getElementById('pac-input');
       var searchBox = new google.maps.places.SearchBox(input);
-      map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+      // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
       map.addListener('bounds_changed', function() {
         searchBox.setBounds(map.getBounds());
@@ -91,6 +93,7 @@
       var markers = [];
       searchBox.addListener('places_changed', function() {
         var places = searchBox.getPlaces();
+        console.log(places);
         if (places.length === 0) {
           return;
         }
@@ -112,6 +115,7 @@
             scaledSize: new google.maps.Size(25, 25)
           };
           markers.push(new google.maps.Marker({
+            animation: google.maps.Animation.DROP,
             map: map,
             icon: icon,
             title: place.name,
@@ -123,8 +127,11 @@
           } else {
             bounds.extend(place.geometry.location);
           }
+
+          map.setCenter(place.geometry.location);
+          map.setZoom(17);
         });
-        map.fitBounds(bounds);
+        // map.fitBounds(bounds);
       });
     }
 

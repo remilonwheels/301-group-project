@@ -4,7 +4,9 @@
   let mapController = {};
 
   mapController.index = () => {
-    $(facility.fetch(mapView.initMapView));
+    $('section').hide();
+    // $(facility.fetch(mapView.initMapView));
+    $('#home').show();
   }
 
   // mapController.changeFacilityRates() = {
