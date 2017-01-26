@@ -4,6 +4,7 @@
   const aboutController = {};
 
   aboutController.index = () => {
+    $('section').hide();
     $('#about-us').show();
   };
 
