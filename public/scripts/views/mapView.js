@@ -16,14 +16,25 @@ function initMapView() {
           let marker = new google.maps.Marker({
             position: facility.location,
             map: map,
-            label: `$${facility.rate2Hr}`,
-            icon: {
-              scale: 6,
-              path: google.maps.SymbolPath.CIRCLE,
-              strokeColor: '#228B22',
-              fillColor:'#228B22',
-              color: 'white'
-            }
+            label: {
+              color: 'white',
+              text:`$${facility.rate2Hr}`
+            },
+            // icon: {
+            //   scale: 6,
+            //   path: google.maps.SymbolPath.CIRCLE,
+            //   strokeColor: '#228B22',
+            //   fillColor:'#228B22',
+            //   color: 'white'
+            // },
+            icon:{
+              anchor: new google.maps.Point(16, 16),
+              url: `data:image/svg+xml;utf-8, \
+                  <svg uid="${facility.id}" width="30" height="30" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"> \
+                    <path fill="green" stroke="green" stroke-width="1" d="M3.5 3.5h25v25h-25z" ></path> \
+                  </svg>`
+            },
+            id: `facility.id`
           });
           marker.addListener('click', () => {
             infowindow.open(map, marker);
@@ -33,13 +44,23 @@ function initMapView() {
           let marker = new google.maps.Marker({
             position: facility.location,
             map: map,
-            label: `$${facility.rate2Hr}`,
-            icon: {
-              scale: 6,
-              path: google.maps.SymbolPath.CIRCLE,
-              strokeColor: '#f00',
-              fillColor: '#f00',
-              color: 'white'
+            label: {
+              color: 'red',
+              text:`$${facility.rate2Hr}`
+            },
+            // icon: {
+            //   scale: 6,
+            //   path: google.maps.SymbolPath.CIRCLE,
+            //   strokeColor: '#228B22',
+            //   fillColor:'#228B22',
+            //   color: 'white'
+            // },
+            icon:{
+              anchor: new google.maps.Point(16, 16),
+              url: 'data:image/svg+xml;utf-8, \
+                  <svg width="30" height="30" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"> \
+                     <circle cx="14" cy="14" r="14" stroke="black" fill="black" /> \
+                  </svg>'
             }
           });
           marker.addListener('click', () => {
