@@ -1437,6 +1437,24 @@ ol ol {
   padding-right: 5px;
   padding-left: 5px;
 }
+.controller{
+  display: inline;
+  margin-left: 4.5%;
+  width: 100%;
+}
+html, body, section{
+  width: 100%;
+}
+.mapbutton{
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: rgba(245,245,245, .8);
+  font-family: "Josefin Slab","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight: bold;
+  color: black;
+  margin-left: 2%;
+  width: 20%;
+}
 dl {
   margin-top: 0;
   margin-bottom: 20px;
@@ -1581,6 +1599,12 @@ pre code {
   max-height: 340px;
   overflow-y: scroll;
 }
+#cright{
+  width: 100%;
+  margin: 0;
+  color: rgba(255,255,255, .9);
+  text-align: center;
+}
 #map {
   padding-right: 25px;
   padding-left: 25px;
@@ -1589,6 +1613,7 @@ pre code {
   margin-bottom: 20px;
 
 }
+
 .container {
   padding-right: 15px;
   padding-left: 15px;
@@ -1600,9 +1625,8 @@ pre code {
     width: 750px;
   }
   #map{
-    width: 750px;
+    width: 767px;
   }
-
 }
 @media (min-width: 992px) {
   .container {
@@ -1611,7 +1635,7 @@ pre code {
   #map {
     width: 991px;
   }
-  }
+}
 @media (min-width: 1200px) {
   .container {
     width: 1170px;
@@ -1619,6 +1643,7 @@ pre code {
   #map {
     width: 1150;
   }
+
 }
 .container-fluid {
   padding-right: 15px;
