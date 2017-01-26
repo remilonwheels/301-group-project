@@ -2,76 +2,84 @@
 
 (function(module){
   const mapView = {};
+  var codefellows = {lat: 47.618217, lng: -122.351832};
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 16,
+    center: codefellows
+  });
   mapView.facilityMarkers = [];
 
-  mapView.initMapView = () => {
-    var codefellows = {lat: 47.618217, lng: -122.351832};
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 13,
-      center: codefellows
-    });
-    makeMapMarkers();
-    makeAddressSearchBar();
-
-    function makeMapMarkers() {
+  mapView.makeMapMarkers = (zzRatezz, filterRate) => {
       facility.all.forEach(facility => {
-        if(facility.rate2Hr){
-          if(facility.rate2Hr <= 9){
-            let marker = new google.maps.Marker({
-              position: facility.location,
-              map: map,
-              label: {
-                color: 'white',
-                text:`$${facility.rate2Hr}`
-              },
-              icon:{
-                anchor: new google.maps.Point(16, 16),
-                url: `data:image/svg+xml;utf-8, \
-                <svg uid="${facility.id}" width="30" height="30" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"> \
-                <path fill="green" stroke="green" stroke-width="1" d="M3.5 3.5h25v25h-25z" ></path> \
-                </svg>`
-              },
-              id: `facility.id`
-            });
-            marker.addListener('click', () => {
-              infowindow.open(map, marker);
-            });
-            mapView.facilityMarkers[facility.id] = marker;
-          }
-          if(facility.rate2Hr > 9){
-            let marker = new google.maps.Marker({
-              position: facility.location,
-              map: map,
-              label: {
-                color: 'red',
-                text:`$${facility.rate2Hr}`
-              },
-              icon:{
-                anchor: new google.maps.Point(16, 16),
-                url: 'data:image/svg+xml;utf-8, \
-                <svg width="30" height="30" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"> \
-                <circle cx="14" cy="14" r="14" stroke="black" fill="black" /> \
-                </svg>'
-              }
-            });
-            marker.addListener('click', () => {
-              infowindow.open(map, marker);
-            });
-            mapView.facilityMarkers[facility.id] = marker;
-          }
-
-
-          var contentString = `<h4>${!facility.facilityName ? 'unknown' : facility.facilityName}</h4><p>${facility.addressFull}</p><h6>Hours</h6><p>${!facility.hoursMF ? 'unknown' : facility.hoursMF}</p><h6>Weekend Hrs</h6><p>SAT: ${!facility.hoursSat ? 'N/A' : facility.hoursSat}</p><p>SUN: ${!facility.hoursSun ? 'N/A' : facility.hoursSun}</p><h6>Price</h6><p> ${facility.rate2Hr}</p>`;
-
-          var infowindow = new google.maps.InfoWindow({
-            content: contentString,
-            maxWidth: 200
+        if(facility[zzRatezz] <= filterRate){
+          let marker = new google.maps.Marker({
+            position: facility.location,
+            map: map,
+            label: {
+              color: 'white',
+              text:`$${facility[zzRatezz]}`
+            },
+            icon:{
+              anchor: new google.maps.Point(16, 16),
+              url: `data:image/svg+xml;utf-8, \
+              <svg uid="${facility.id}" width="30" height="30" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"> \
+              <path fill="green" stroke="green" stroke-width="1" d="M3.5 3.5h25v25h-25z" ></path> \
+              </svg>`
+            },
+            id: `facility.id`
           });
+          marker.addListener('click', () => {
+            infowindow.open(map, marker);
+          });
+          mapView.facilityMarkers[facility.id] = marker;
+          if (!facility[zzRatezz]) {
+            console.log('in');
+            marker.setVisible(false);
+          }
         }
+        if(facility[zzRatezz] > filterRate){
+          let marker = new google.maps.Marker({
+            position: facility.location,
+            map: map,
+            label: {
+              color: 'red',
+              text:`$${facility[zzRatezz]}`
+            },
+            icon:{
+              anchor: new google.maps.Point(16, 16),
+              url: 'data:image/svg+xml;utf-8, \
+              <svg width="30" height="30" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"> \
+              <circle cx="14" cy="14" r="14" stroke="black" fill="black" /> \
+              </svg>'
+            }
+          });
+          marker.addListener('click', () => {
+            infowindow.open(map, marker);
+          });
+          mapView.facilityMarkers[facility.id] = marker;
+
+          if (!facility[zzRatezz]) {
+            console.log('in');
+            marker.setVisible(false);
+          }
+        }
+
+
+        var contentString = `<h4>${!facility.facilityName ? 'unknown' : facility.facilityName}</h4><p>${facility.addressFull}</p><h6>Hours</h6><p>${!facility.hoursMF ? 'unknown' : facility.hoursMF}</p><h6>Weekend Hrs</h6><p>SAT: ${!facility.hoursSat ? 'N/A' : facility.hoursSat}</p><p>SUN: ${!facility.hoursSun ? 'N/A' : facility.hoursSun}</p><h6>Price</h6><p> ${facility[zzRatezz]}</p>`;
+
+        var infowindow = new google.maps.InfoWindow({
+          content: contentString,
+          maxWidth: 200
+        });
       });
     }
 
-  function makeAddressSearchBar() {
+  mapView.initMapView = () => {
+
+    mapView.makeMapMarkers('rate2Hr', 9);
+    makeAddressSearchBar();
+
+    function makeAddressSearchBar() {
 
       var input = document.getElementById('pac-input');
       var searchBox = new google.maps.places.SearchBox(input);
@@ -119,7 +127,25 @@
         map.fitBounds(bounds);
       });
     }
+
+    $('#rate-change-button-1hr').on('click', () => {
+      mapView.facilityMarkers.forEach(marker => marker.setMap(null));
+      mapView.makeMapMarkers('rate1Hr', 6);
+    });
+    $('#rate-change-button-2hr').on('click', () => {
+      mapView.facilityMarkers.forEach(marker => marker.setMap(null));
+      mapView.makeMapMarkers('rate2Hr', 9);
+    });
+    $('#rate-change-button-3hr').on('click', () => {
+      mapView.facilityMarkers.forEach(marker => marker.setMap(null));
+      mapView.makeMapMarkers('rate3Hr', 12);
+    });
+    $('#rate-change-button-day').on('click', () => {
+      mapView.facilityMarkers.forEach(marker => marker.setMap(null));
+      mapView.makeMapMarkers('rateDay', 15);
+    });
   }
+
   module.mapView = mapView;
 })(window)
 
