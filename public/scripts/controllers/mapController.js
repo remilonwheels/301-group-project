@@ -7,5 +7,11 @@
     $(facility.fetch(mapView.initMapView));
   }
 
+  // mapController.changeFacilityRates() = {
+  //
+  // }
+
+
+
   module.mapController = mapController;
 })(window);

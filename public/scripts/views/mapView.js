@@ -2,27 +2,23 @@
 
 (function(module){
   const mapView = {};
+  var codefellows = {lat: 47.618217, lng: -122.351832};
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 16,
+    center: codefellows
+  });
   mapView.facilityMarkers = [];
 
-  mapView.initMapView = () => {
-    var codefellows = {lat: 47.618217, lng: -122.351832};
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 13,
-      center: codefellows
-    });
-    makeMapMarkers();
-    makeAddressSearchBar();
-
-    function makeMapMarkers() {
+  mapView.makeMapMarkers = (zzRatezz) => {
       facility.all.forEach(facility => {
-        if(facility.rate2Hr){
-          if(facility.rate2Hr <= 9){
+        // if(facility[zzRatezz]){
+          if(facility[zzRatezz] <= 9){
             let marker = new google.maps.Marker({
               position: facility.location,
               map: map,
               label: {
                 color: 'white',
-                text:`$${facility.rate2Hr}`
+                text:`$${facility[zzRatezz]}`
               },
               icon:{
                 anchor: new google.maps.Point(16, 16),
@@ -37,14 +33,18 @@
               infowindow.open(map, marker);
             });
             mapView.facilityMarkers[facility.id] = marker;
+            if (!facility[zzRatezz]) {
+              console.log('in');
+              marker.setVisible(false);
+            }
           }
-          if(facility.rate2Hr > 9){
+          if(facility[zzRatezz] > 9){
             let marker = new google.maps.Marker({
               position: facility.location,
               map: map,
               label: {
                 color: 'red',
-                text:`$${facility.rate2Hr}`
+                text:`$${facility[zzRatezz]}`
               },
               icon:{
                 anchor: new google.maps.Point(16, 16),
@@ -58,20 +58,30 @@
               infowindow.open(map, marker);
             });
             mapView.facilityMarkers[facility.id] = marker;
+
+            if (!facility[zzRatezz]) {
+              console.log('in');
+              marker.setVisible(false);
+            }
           }
 
 
-          var contentString = `<h4>${!facility.facilityName ? 'unknown' : facility.facilityName}</h4><p>${facility.addressFull}</p><h6>Hours</h6><p>${!facility.hoursMF ? 'unknown' : facility.hoursMF}</p><h6>Weekend Hrs</h6><p>SAT: ${!facility.hoursSat ? 'N/A' : facility.hoursSat}</p><p>SUN: ${!facility.hoursSun ? 'N/A' : facility.hoursSun}</p><h6>Price</h6><p> ${facility.rate2Hr}</p>`;
+          var contentString = `<h4>${!facility.facilityName ? 'unknown' : facility.facilityName}</h4><p>${facility.addressFull}</p><h6>Hours</h6><p>${!facility.hoursMF ? 'unknown' : facility.hoursMF}</p><h6>Weekend Hrs</h6><p>SAT: ${!facility.hoursSat ? 'N/A' : facility.hoursSat}</p><p>SUN: ${!facility.hoursSun ? 'N/A' : facility.hoursSun}</p><h6>Price</h6><p> ${facility[zzRatezz]}</p>`;
 
           var infowindow = new google.maps.InfoWindow({
             content: contentString,
             maxWidth: 200
           });
-        }
+        // }
       });
     }
 
-  function makeAddressSearchBar() {
+  mapView.initMapView = () => {
+
+    mapView.makeMapMarkers('rate2Hr');
+    makeAddressSearchBar();
+
+    function makeAddressSearchBar() {
 
       var input = document.getElementById('pac-input');
       var searchBox = new google.maps.places.SearchBox(input);
@@ -119,7 +129,25 @@
         map.fitBounds(bounds);
       });
     }
+
+    $('#rate-change-button-1hr').on('click', () => {
+      mapView.facilityMarkers.forEach(marker => marker.setMap(null));
+      mapView.makeMapMarkers('rate1Hr');
+    });
+    $('#rate-change-button-2hr').on('click', () => {
+      mapView.facilityMarkers.forEach(marker => marker.setMap(null));
+      mapView.makeMapMarkers('rate2Hr');
+    });
+    $('#rate-change-button-3hr').on('click', () => {
+      mapView.facilityMarkers.forEach(marker => marker.setMap(null));
+      mapView.makeMapMarkers('rate3Hr');
+    });
+    $('#rate-change-button-day').on('click', () => {
+      mapView.facilityMarkers.forEach(marker => marker.setMap(null));
+      mapView.makeMapMarkers('rateDay');
+    });
   }
+
   module.mapView = mapView;
 })(window)
 
