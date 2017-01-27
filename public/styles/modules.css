@@ -3,10 +3,32 @@
   width: 100%;
 }
 
+#map p {
+  font-size: .85em;
+}
+
+#map h4 {
+  font-size: 1.1em;
+}
+
 #legend {
   font-family: Arial, sans-serif;
   background: #fff;
   padding: 10px;
   margin: 10px;
   border: 3px solid #000;
+}
+
+.controller h2 {
+  font-size: 1.5em;
+  color: white;
+  text-align: center;
+}
+
+.margin-bottom-zero {
+  margin-bottom: 0;
+}
+
+.bold {
+  font-weight: 500;
 }

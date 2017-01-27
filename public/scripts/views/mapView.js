@@ -62,7 +62,8 @@
               <svg width="30" height="30" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"> \
               <circle cx="14" cy="14" r="14" stroke="black" fill="black" /> \
               </svg>'
-            }
+            },
+            zIndex: 10
           });
 
 
@@ -78,7 +79,16 @@
         }
 
 
-        var contentString = `<h4>${!facility.facilityName ? 'unknown' : facility.facilityName}</h4><p>${facility.addressFull}</p><h6>Hours</h6><p>${!facility.hoursMF ? 'unknown' : facility.hoursMF}</p><h6>Weekend Hrs</h6><p>SAT: ${!facility.hoursSat ? 'N/A' : facility.hoursSat}</p><p>SUN: ${!facility.hoursSun ? 'N/A' : facility.hoursSun}</p><h6>Price</h6><p> ${facility[zzRatezz]}</p>`;
+        var contentString = `
+        <h4>${!facility.facilityName ? 'unknown' : facility.facilityName}</h4>
+        <p>${facility.addressFull}</p>
+        <p class="margin-bottom-zero"><span class="bold">M-F</span> ${!facility.hoursMF ? 'unknown' : facility.hoursMF}</p>
+        <p class="margin-bottom-zero"><span class="bold">SAT</span> ${!facility.hoursSat ? 'unknown' : facility.hoursSat}</p>
+        <p><span class="bold">SUN</span> ${!facility.hoursSun ? 'unknown' : facility.hoursSun}</p>
+        <p class="margin-bottom-zero"><span class="bold">1HR</span> $${!facility.rate1Hr ? ' unknown' : facility.rate1Hr}</p>
+        <p class="margin-bottom-zero"><span class="bold">2HR</span> $${!facility.rate2Hr ? ' unknown' : facility.rate2Hr}</p>
+        <p class="margin-bottom-zero"><span class="bold">3HR</span> $${!facility.rate3Hr ? ' unknown' : facility.rate3Hr}</p>
+        <p><span class="bold">DAY</span> $${!facility.rateDay ? ' unknown' : facility.rateDay}</p>`;
 
         var infowindow = new google.maps.InfoWindow({
           content: contentString,

@@ -1438,7 +1438,7 @@ ol ol {
   padding-left: 5px;
 }
 .controller{
-  display: inline;
+  /*display: inline;*/
   margin-left: 4.5%;
   width: 100%;
 }
@@ -1604,6 +1604,7 @@ pre code {
   margin: 0;
   color: rgba(255,255,255, .9);
   text-align: center;
+  font-size: 1em;
 }
 #map {
   padding-right: 25px;
