@@ -7,7 +7,16 @@
     zoom: 16,
     center: codefellows
   });
+
+
   mapView.facilityMarkers = [];
+
+  $('#legend').html(`<svg width="30" height="30" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <path fill="green" stroke="green" stroke-width="1" d="M3.5 3.5h25v25h-25z" ></path></svg> Right Price
+  <svg width="30" height="30" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="14" cy="14" r="14" stroke="black" fill="black" />
+  </svg> Too Much`);
+  map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push($('#legend')[0]);
 
   mapView.makeMapMarkers = (zzRatezz, filterRate) => {
       facility.all.forEach(facility => {
@@ -55,6 +64,8 @@
               </svg>'
             }
           });
+
+
           marker.addListener('click', () => {
             infowindow.open(map, marker);
           });
