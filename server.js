@@ -9,6 +9,8 @@ const conString = process.env.DATABASE_URL || 'postgres://localhost:5432';
 
 app.use(express.static('./public'));
 
+// app.get('/rate', (request, response) => response.sendFile('rate server'));
+
 app.get('*', (request, response) => response.sendFile('index.html', {root: './public'}));
 
 
