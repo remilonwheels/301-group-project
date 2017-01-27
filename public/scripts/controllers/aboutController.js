@@ -5,6 +5,7 @@
 
   aboutController.index = () => {
     $('section').hide();
+    mapView.facilityMarkers.forEach(marker => marker.setMap(null));
     $('#about-us').show();
   };
 

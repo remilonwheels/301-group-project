@@ -5,15 +5,25 @@
 
   mapController.index = () => {
     $('section').hide();
-    // $(facility.fetch(mapView.initMapView));
+    $(facility.fetch(initIndex));
+    facility.all = [];
     $('#home').show();
   }
 
-  // mapController.changeFacilityRates() = {
-  //
-  // }
+  mapController.rate = (ctx) => {
+    console.log('in rate jam');
+    if( facility.all ) {
+      $(`#rate-change-button-${ctx.params.rateTime}`).trigger('click');
+    }
+    else console.log('ayo');
+  }
 
 
 
   module.mapController = mapController;
 })(window);
+
+function initIndex () {
+  // page();
+  mapView.initMapView();
+}

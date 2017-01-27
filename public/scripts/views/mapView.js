@@ -19,6 +19,9 @@
   map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push($('#legend')[0]);
 
   mapView.makeMapMarkers = (zzRatezz, filterRate) => {
+    mapView.facilityMarkers.forEach(marker => marker.setMap(null));
+    mapView.facilityMarkers = [];
+
       facility.all.forEach(facility => {
         if(facility[zzRatezz] <= filterRate){
           let marker = new google.maps.Marker({
@@ -53,7 +56,7 @@
             position: facility.location,
             map: map,
             label: {
-              color: 'red',
+              color: '#FF0009',
               text:`$${facility[zzRatezz]}`
             },
             icon:{
@@ -78,9 +81,9 @@
           }
         }
 
-
+// <h4>${!facility.facilityName ? 'unknown' : facility.facilityName}</h4>
         var contentString = `
-        <h4>${!facility.facilityName ? 'unknown' : facility.facilityName}</h4>
+        <h4>${facility.facilityName ? facility.facilityName : (facility.opName ? facility.opName : 'unknown')}</h4>
         <p>${facility.addressFull}</p>
         <p class="margin-bottom-zero"><span class="bold">M-F</span> ${!facility.hoursMF ? 'unknown' : facility.hoursMF}</p>
         <p class="margin-bottom-zero"><span class="bold">SAT</span> ${!facility.hoursSat ? 'unknown' : facility.hoursSat}</p>
@@ -136,7 +139,7 @@
             scaledSize: new google.maps.Size(25, 25)
           };
           markers.push(new google.maps.Marker({
-            animation: google.maps.Animation.DROP,
+            animation: google.maps.Animation.BOUNCE,
             map: map,
             icon: icon,
             title: place.name,

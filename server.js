@@ -9,7 +9,7 @@ const conString = process.env.DATABASE_URL || 'postgres://localhost:5432';
 
 app.use(express.static('./public'));
 
-app.get('/', (request, response) => response.sendFile('index.html', {root: './public'}));
+app.get('*', (request, response) => response.sendFile('index.html', {root: './public'}));
 
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}!`));
