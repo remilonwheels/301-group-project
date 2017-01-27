@@ -183,3 +183,4 @@
 function queryStringify(string) {
   return string.trim().replace(/\s{3}/g, '').replace(/\s/g, '+');
 }
+console.log('%cget out of our code brah', 'background: red; color: yellow; font-size: 36px');
