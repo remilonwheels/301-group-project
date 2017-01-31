@@ -7,7 +7,8 @@ page('/about', aboutController.index);
 
 page('/:rate', mapController.rate );
 
-page('/*', () => { page('/'); });
+page('/*', () => { page('/2Hr'); });
+
 
 
 page();

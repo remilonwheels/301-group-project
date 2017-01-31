@@ -44,7 +44,7 @@
     // .then((data, msg, xhr) => {
     //   console.log(xhr.getResponseHeader('Last-Modified'));
     // });
-    function fetch (callback) {
+    function fetch (callback, rate, filterRate) {
       let tempArray = [];
       //URLS for practice and real
       // https://data.seattle.gov/api/views/3neb-8edu/rows.json
@@ -53,8 +53,9 @@
       $.getJSON('scripts/data/allFacilities.json')
       .then( dataObject => {
         if ( !dataObject.data ) {
+          console.log('data object');
           dataObject.forEach(facility => new Facility(facility));
-          callback();
+          callback()(rate, filterRate);
         } else {
 
           dataObject.data.forEach(facility => new Facility(facility));
@@ -73,7 +74,7 @@
           .then(() => {
             facility.all = tempArray;
             console.log(tempArray);
-            callback();
+            callback()(rate, filterRate);
           });
         }
 

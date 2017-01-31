@@ -19,11 +19,14 @@
   map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push($('#legend')[0]);
 
   mapView.makeMapMarkers = () => {
+    console.log('in make markers');
 
     function makeMapMarkers(zzRatezz, filterRate) {
+      console.log(zzRatezz);
 
       mapView.facilityMarkers.forEach(marker => marker.setMap(null));
       mapView.facilityMarkers = [];
+      console.log(facility.all);
 
       facility.all.forEach(facility => {
         if(facility[zzRatezz] <= filterRate){
@@ -101,6 +104,8 @@
           maxWidth: 200
         });
       });
+      console.log(mapView.facilityMarkers);
+      console.log(facility.all);
     }
 
     return makeMapMarkers;

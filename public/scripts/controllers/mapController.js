@@ -13,26 +13,11 @@
   mapController.rate = (ctx) => {
     $('section').hide();
     console.log('in rate jam');
-    if( facility.all.length === 0) {
-      console.log(facility.fetch());
-      console.log(mapView.makeMapMarkers());
 
-      facility.fetch()(ayo => console.log('ayo', facility.all));
+    console.log(facility.all);
 
-      // facility.fetch()(mapView.makeMapMarkers()());
+    facility.fetch()(mapView.makeMapMarkers,`rate${ctx.params.rate}`, 15);
 
-
-
-
-      // (mapView.makeMapMarkers())(`rate${ctx.params.rate}`, 15);
-
-
-
-      // (`rate${ctx.params.rate}`, 15);
-
-
-
-    }
     $('#home').show();
   }
 
