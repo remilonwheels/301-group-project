@@ -37,48 +37,52 @@
 
   const googleMapsKey = 'AIzaSyDQa2PVVXDWXN-EU5SRjbITcl1WhyzrGGw';
 
-  facility.fetch = (callback) => {
+  facility.fetch = () => {
+
     // Check if there is garage data has changed
     // $.ajax( { url: 'https://data.seattle.gov/api/views/3neb-8edu/rows.json', method: 'HEAD' })
     // .then((data, msg, xhr) => {
     //   console.log(xhr.getResponseHeader('Last-Modified'));
     // });
-
-
-
-    let tempArray = [];
-    //URLS for practice and real
-    // https://data.seattle.gov/api/views/3neb-8edu/rows.json
-    //'scripts/data/sample10.json'
-    // /fetch -> server-side call
-    $.getJSON('scripts/data/allFacilities.json')
-    .then( dataObject => {
-      if ( !dataObject.data ) {
-        dataObject.forEach(facility => new Facility(facility));
-        callback();
-      } else {
-
-        dataObject.data.forEach(facility => new Facility(facility));
-
-        Promise.all(
-          facility.all.map( facility => {
-            return $.getJSON(`https://maps.googleapis.com/maps/api/geocode/json?address=${queryStringify(facility.addressFull)}&key=${googleMapsKey}`)
-            .then( locationObject => {
-              if(locationObject.results[0].geometry.location) {
-                facility.location = locationObject.results[0].geometry.location;
-                tempArray.push(facility);
-              }
-            })
-          })
-        )
-        .then(() => {
-          facility.all = tempArray;
-          console.log(tempArray);
+    function fetch (callback) {
+      let tempArray = [];
+      //URLS for practice and real
+      // https://data.seattle.gov/api/views/3neb-8edu/rows.json
+      //'scripts/data/sample10.json'
+      // /fetch -> server-side call
+      $.getJSON('scripts/data/allFacilities.json')
+      .then( dataObject => {
+        if ( !dataObject.data ) {
+          dataObject.forEach(facility => new Facility(facility));
           callback();
-        });
-      }
+        } else {
 
-    });
+          dataObject.data.forEach(facility => new Facility(facility));
+
+          Promise.all(
+            facility.all.map( facility => {
+              return $.getJSON(`https://maps.googleapis.com/maps/api/geocode/json?address=${queryStringify(facility.addressFull)}&key=${googleMapsKey}`)
+              .then( locationObject => {
+                if(locationObject.results[0].geometry.location) {
+                  facility.location = locationObject.results[0].geometry.location;
+                  tempArray.push(facility);
+                }
+              })
+            })
+          )
+          .then(() => {
+            facility.all = tempArray;
+            console.log(tempArray);
+            callback();
+          });
+        }
+
+      });
+
+    }
+
+    return fetch;
+
   }
 
   module.facility = facility;

@@ -11,11 +11,29 @@
   }
 
   mapController.rate = (ctx) => {
+    $('section').hide();
     console.log('in rate jam');
-    if( facility.all ) {
-      $(`#rate-change-button-${ctx.params.rateTime}`).trigger('click');
+    if( facility.all.length === 0) {
+      console.log(facility.fetch());
+      console.log(mapView.makeMapMarkers());
+
+      facility.fetch()(ayo => console.log('ayo', facility.all));
+
+      // facility.fetch()(mapView.makeMapMarkers()());
+
+
+
+
+      // (mapView.makeMapMarkers())(`rate${ctx.params.rate}`, 15);
+
+
+
+      // (`rate${ctx.params.rate}`, 15);
+
+
+
     }
-    else console.log('ayo');
+    $('#home').show();
   }
 
 

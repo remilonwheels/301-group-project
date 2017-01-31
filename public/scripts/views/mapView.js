@@ -18,9 +18,12 @@
   </svg> Too Much`);
   map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push($('#legend')[0]);
 
-  mapView.makeMapMarkers = (zzRatezz, filterRate) => {
-    mapView.facilityMarkers.forEach(marker => marker.setMap(null));
-    mapView.facilityMarkers = [];
+  mapView.makeMapMarkers = () => {
+
+    function makeMapMarkers(zzRatezz, filterRate) {
+
+      mapView.facilityMarkers.forEach(marker => marker.setMap(null));
+      mapView.facilityMarkers = [];
 
       facility.all.forEach(facility => {
         if(facility[zzRatezz] <= filterRate){
@@ -81,7 +84,7 @@
           }
         }
 
-// <h4>${!facility.facilityName ? 'unknown' : facility.facilityName}</h4>
+        // <h4>${!facility.facilityName ? 'unknown' : facility.facilityName}</h4>
         var contentString = `
         <h4>${facility.facilityName ? facility.facilityName : (facility.opName ? facility.opName : 'unknown')}</h4>
         <p>${facility.addressFull}</p>
@@ -100,12 +103,12 @@
       });
     }
 
-  mapView.initMapView = () => {
+    return makeMapMarkers;
 
-    mapView.makeMapMarkers('rate2Hr', 9);
-    makeAddressSearchBar();
 
-    function makeAddressSearchBar() {
+    }
+
+  function makeAddressSearchBar() {
 
       var input = document.getElementById('pac-input');
       var searchBox = new google.maps.places.SearchBox(input);
@@ -158,6 +161,12 @@
         // map.fitBounds(bounds);
       });
     }
+
+  makeAddressSearchBar();
+  mapView.initMapView = () => {
+
+    // mapView.makeMapMarkers('rate2Hr', 9);
+
 
     $('#rate-change-button-1hr').on('click', () => {
       mapView.facilityMarkers.forEach(marker => marker.setMap(null));
